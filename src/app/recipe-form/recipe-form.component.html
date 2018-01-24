@@ -1,0 +1,48 @@
+<h2 *ngIf="model.id > 0" class="display-2 my-3">Edit a recipe</h2>
+<h2 *ngIf="model.id === 0" class="display-2 my-3">New recipe</h2>
+
+<form (submit)="submit(recipeForm)" #recipeForm="ngForm" novalidate>
+  {{ message }}
+  <div class="form-group">
+    <label for="title">Recipe name</label>
+    <input type="text" class="form-control" id="title" placeholder="Recipe name"
+      name="title"
+      [(ngModel)]="model.title"
+      required
+      minlength="3"
+      #title="ngModel"
+      [class.is-invalid]="title.invalid && (title.dirty || title.touched)"
+      [class.is-valid]="title.valid"
+    >
+    <div class="invalid-feedback" *ngIf="title.invalid && title.errors.required">
+      Please provide a recipe name!
+    </div>
+    <div class="invalid-feedback" *ngIf="title.invalid && title.errors.minlength">
+      A recipe name is at least 3 characters long!
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="ingredients">Ingredients</label>
+    <textarea class="form-control" id="ingredients" rows="3" placeholder="- ingredient 1
+  - ingredient 2" required
+      name="ingredients"
+      [(ngModel)]="model.ingredients"
+    ></textarea>
+    <div class="invalid-feedback">
+      Please provide at least one ingredient!
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control" id="description" rows="5" required
+      name="description"
+      [(ngModel)]="model.description"
+    ></textarea>
+    <div class="invalid-feedback">
+      Please provide a description!
+    </div>
+  </div>
+
+  <button [disabled]="!recipeForm.valid" type="submit" class="btn btn-primary">Submit</button>
+
+</form>
